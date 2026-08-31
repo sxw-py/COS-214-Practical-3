@@ -11,6 +11,12 @@ class CattleStall : public Stall
 		CattleStall(int numCattle, int cap);
 		virtual int getNumCattle();
 		virtual void moo();
+		virtual void setup(Subject&) override;
+		virtual void shutdown(Subject&) override;
+		virtual void escapedBull(Subject&) override;
+		virtual void capacityAlert(Subject&) override;
+		virtual void quarantine(int days) override;
+		virtual void feedingTime(std::string foodType) override;
 };
 
 #endif

@@ -11,7 +11,6 @@ class CardiacStall : public MedicalStall
 	public:
 		CardiacStall(int cap);
 		void treatPatient(const Patient<MI>& patient) const;
-		virtual void setup(Subject&) override;
 };
 
 #endif

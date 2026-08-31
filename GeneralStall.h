@@ -11,6 +11,10 @@ class GeneralStall : public Stall
 		virtual int unitCost() const = 0;
 		void buyItem();
 		int getRevenue();
+		virtual void setup(Subject&) override;
+		virtual void shutdown(Subject&) override;
+		virtual void weatherAlert(Subject&) override;
+		virtual void vipArrival(int vipLevel) override;
 };
 
 #endif

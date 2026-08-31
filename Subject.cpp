@@ -35,6 +35,24 @@ void Subject::medicalEmergency()
 		o->medicalEmergency(*this);
 }
 
+void Subject::vipArrival(int vipLevel)
+{
+	for (auto o : observers)
+		o->vipArrival(vipLevel);
+}
+
+void Subject::quarantine(int days)
+{
+	for (auto o : observers)
+		o->quarantine(days);
+}
+
+void Subject::feedingTime(std::string foodType)
+{
+	for (auto o : observers)
+		o->feedingTime(foodType);
+}
+
 void Subject::escapedBull()
 {
 	for (auto o : observers)
