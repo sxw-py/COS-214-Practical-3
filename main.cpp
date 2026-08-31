@@ -64,7 +64,7 @@ int main()
 	medArea->attach(rapidResponseTeam);
 	
 	std::cout << "\n--- Emergency: Escaped Bull in Cattle Area! ---" << std::endl;
-	mainAuction.escapedBull(); // Broadcasts to its observers (cascades)
+	mainAuction.escapedBull("Main Gate", 1); // Broadcasts to its observers (cascades)
 	
 	std::cout << "\n--- Runtime Reorganisation: Transferring Medical Team ---" << std::endl;
 	std::cout << "1. Removing from Medical Area..." << std::endl;
@@ -76,7 +76,7 @@ int main()
 	cattleArea->attach(rapidResponseTeam);
 	
 	std::cout << "\n--- Situation Update ---" << std::endl;
-	cattleArea->capacityAlert(); // Now the rapid response team should receive this!
+	cattleArea->capacityAlert(25, 20); // Now the rapid response team should receive this!
 
 	std::cout << "\n--- Task 4.4: Original Features Demonstration ---" << std::endl;
 	
