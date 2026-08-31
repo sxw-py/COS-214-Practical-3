@@ -17,4 +17,5 @@ class CardiacStall : public MedicalStall
         virtual void escapedBull(const std::string& location, int numBulls) override;
 };	
 
+
 #endif

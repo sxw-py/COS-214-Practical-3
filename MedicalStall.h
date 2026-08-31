@@ -8,6 +8,9 @@ class MedicalStall : public Stall
 	public:
 		MedicalStall(int cap);
 		virtual void capacityAlert(Subject& subject) override;
+		virtual void setup(Subject&) override;
+		virtual void shutdown(Subject&) override;
+		virtual void medicalEmergency(Subject&) override;
 };
 
 #endif

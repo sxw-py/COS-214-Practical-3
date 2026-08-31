@@ -39,6 +39,23 @@ void Subject::setWeatherData(int severity, const std::string& type){
 	currentSeverity = severity;
 	currentWeatherType = type;
 	weatherAlert();  //notify all observers
+
+void Subject::vipArrival(int vipLevel)
+{
+	for (auto o : observers)
+		o->vipArrival(vipLevel);
+}
+
+void Subject::quarantine(int days)
+{
+	for (auto o : observers)
+		o->quarantine(days);
+}
+
+void Subject::feedingTime(std::string foodType)
+{
+	for (auto o : observers)
+		o->feedingTime(foodType);
 }
 
 

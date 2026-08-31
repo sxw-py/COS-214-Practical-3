@@ -24,3 +24,5 @@ void PulmonaryStall::escapedBull(const std::string& location, int numBulls){
 	std::cout << "- Defibrillator ready" << std::endl;
 	std::cout << "- Expecting panic-induced heart issues" << std::endl;	
 }
+
+
