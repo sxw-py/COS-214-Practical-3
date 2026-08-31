@@ -7,6 +7,13 @@
 #include "Observer.h"
 
 
+/**
+ * @class Composite
+ * @brief The Composite participant in the Composite design pattern.
+ *
+ * Defines behavior for components having children. It stores child components
+ * and implements child-related operations in the Component interface.
+ */
 class Composite : public EventComponent, public Subject, public Observer
 {
 	private:
@@ -47,12 +54,29 @@ class Composite : public EventComponent, public Subject, public Observer
 				sum += child->getCapacity();
 			return sum;
 		}
+		/**
+		 * @brief Adds a child component to this composite.
+		 * 
+		 * @note **Design Decision (Task 6.3):** By passing a raw pointer, the Composite
+		 * takes ownership of the child's lifetime.
+		 * 
+		 * @param child Pointer to the child EventComponent to add.
+		 */
 		virtual void addChild(EventComponent* child)
 		{
 			removeChild(child);
 			children.push_back(child);
 		}
 
+		/**
+		 * @brief Removes a child component without deleting it.
+		 * 
+		 * @note **Design Decision (Task 6.3):** This method explicitly relinquishes ownership 
+		 * without calling `delete`. This allows for runtime reorganization where a child
+		 * can be transferred to another composite safely.
+		 * 
+		 * @param child Pointer to the child EventComponent to remove.
+		 */
 		virtual EventComponent* removeChild(EventComponent* child)
 		{
 			for (auto it = children.begin(); it != children.end(); )
@@ -65,6 +89,13 @@ class Composite : public EventComponent, public Subject, public Observer
 			return child;
 		}
 
+		/**
+		 * @brief Cleans up dynamically allocated children.
+		 * 
+		 * @note **Design Decision (Task 6.3):** The Composite assumes ownership of any child
+		 * added to it. When the Composite is destroyed, it deletes all remaining children
+		 * to prevent memory leaks.
+		 */
 		virtual ~Composite()
 		{
 			for (auto child : children)
