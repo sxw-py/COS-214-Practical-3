@@ -18,6 +18,9 @@ class Composite : public EventComponent, public Subject, public Observer
 		using Subject::escapedBull;
 		using Subject::weatherAlert;
 		using Subject::capacityAlert;
+		using Subject::vipArrival;
+		using Subject::quarantine;
+		using Subject::feedingTime;
 
 		virtual void open() override
 		{
@@ -97,6 +100,24 @@ class Composite : public EventComponent, public Subject, public Observer
 		{
 			for (auto o : observers)
 				o->capacityAlert(subject);
+		}
+		
+		virtual void vipArrival(int vipLevel) override
+		{
+			for (auto o : observers)
+				o->vipArrival(vipLevel);
+		}
+		
+		virtual void quarantine(int days) override
+		{
+			for (auto o : observers)
+				o->quarantine(days);
+		}
+		
+		virtual void feedingTime(std::string foodType) override
+		{
+			for (auto o : observers)
+				o->feedingTime(foodType);
 		}
 };
 

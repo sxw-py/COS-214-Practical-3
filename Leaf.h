@@ -6,7 +6,7 @@
 
 class Leaf : public EventComponent, public Observer
 {
-	private:
+	protected:
 		int capacity;
 		bool isOpen;
 	public:

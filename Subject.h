@@ -17,6 +17,12 @@ class Subject
 		virtual void escapedBull();
 		virtual void weatherAlert();
 		virtual void capacityAlert();
+		
+		// Task 4.4 Original Features
+		virtual void vipArrival(int vipLevel);
+		virtual void quarantine(int days);
+		virtual void feedingTime(std::string foodType);
+		
 		virtual ~Subject() = default;
 };
 
