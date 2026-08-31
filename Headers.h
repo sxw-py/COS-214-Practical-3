@@ -8,7 +8,7 @@ using namespace std;
 
 class Subject;
 
-// make composite observations relay to children
+// no information gets pulled from subject
 class Observer // implement diff notifications in leaves
 {
 	public:
@@ -18,6 +18,7 @@ class Observer // implement diff notifications in leaves
 		virtual void escapedBull(Subject&) {}; 
 		virtual void weatherAlert(Subject&) {};
 		virtual void capacityAlert(Subject&) {};
+		virtual ~Observer() = default;
 };
 
 class EventComponent
@@ -27,6 +28,7 @@ class EventComponent
 		virtual void close() = 0;
 		virtual bool reportStatus() const = 0;
 		virtual int getCapacity() const = 0;
+		virtual ~EventComponent() = default;
 };
 
 
@@ -36,7 +38,7 @@ class Leaf : public EventComponent, public Observer
 		int capacity;
 		bool isOpen;
 	public:
-		Leaf(int cap) : capacity(cap) {}
+		Leaf(int cap) : capacity(cap), isOpen(false) {}
 		virtual void open() override
 		{
 			this->isOpen = true;
@@ -53,11 +55,12 @@ class Leaf : public EventComponent, public Observer
 		{
 			return this->capacity;
 		}
+		virtual ~Leaf() = default;
 };
 
 class Subject
 {
-	private:
+	protected:
 		vector<Observer*> observers;
 	public:
 		virtual void attach(Observer* o)
@@ -105,6 +108,7 @@ class Subject
 			for (auto o : observers)
 				o->capacityAlert(*this);
 		}
+		virtual ~Subject() = default;
 };
 
 template <typename T>
@@ -129,27 +133,67 @@ class Composite : public EventComponent, public Subject, public Observer
 			for (auto child : children)
 				isOpen |= child->reportStatus();
 			return isOpen; // isOpen as long as at least one child is open
+				       // closed if no children
 		}
 		virtual int getCapacity() const override
 		{
 			int sum = 0;
 			for (auto child : children)
-				sum += child.getCapacity();
+				sum += child->getCapacity();
 			return sum;
 		}
 		virtual void addChild(T* child)
 		{
+			removeChild(child);
 			children.push_back(child);
 		}
 
 		virtual T* removeChild(T* child)
 		{
-			// implement
+			for (auto it = children.begin(); it != children.end(); )
+			{
+				if (*it == child)
+					it = children.erase(it);
+				else
+					it++;
+			}
+			return child;
 		}
 
 		virtual ~Composite()
 		{
-			// implement
+			for (auto child : children)
+				delete child;
+		}
+		virtual void setup(Subject& subject) 
+		{
+			for (auto o : observers)
+				o->setup(subject);
+		}
+		virtual void shutdown(Subject& subject) 
+		{
+			for (auto o : observers)
+				o->shutdown(subject);
+		}
+		virtual void medicalEmergency(Subject& subject) 
+		{
+			for (auto o : observers)
+				o->medicalEmergency(subject);
+		}
+		virtual void escapedBull(Subject& subject) 
+		{
+			for (auto o : observers)
+				o->escapedBull(subject);
+		}
+		virtual void weatherAlert(Subject& subject) 
+		{
+			for (auto o : observers)
+				o->weatherAlert(subject);
+		}
+		virtual void capacityAlert(Subject& subject) 
+		{
+			for (auto o : observers)
+				o->capacityAlert(subject);
 		}
 };
 
@@ -161,6 +205,12 @@ class Auction : public Composite<Tent>
 
 class Area
 {
+	public:
+		virtual void open() = 0;
+		virtual void close() = 0;
+		virtual bool reportStatus() const = 0;
+		virtual int getCapacity() const = 0;
+		virtual ~Area() = default;
 };
 
 class Tent : public Composite<Area>
@@ -173,9 +223,9 @@ class Stall : public Leaf
 		Stall(int cap) : Leaf(cap) {}
 };
 
-class Complaint { public: virtual string getComplaint() = 0; };
-class Cough : public Complaint { public: virtual string getComplaint() override { return "cough"; } };
-class MI : public Complaint { public: virtual string getComplaint() override { return "Heart attack"; } };
+class Complaint { public: virtual string getComplaint() const = 0; };
+class Cough : public Complaint { public: virtual string getComplaint() const override { return "cough"; } };
+class MI : public Complaint { public: virtual string getComplaint() const override { return "Heart attack"; } };
 
 template <typename T>
 class Patient
@@ -186,15 +236,18 @@ class Patient
 	public:
 		Patient(string name) : name(name) {}
 		virtual string getName() const { return this->name; }
-		virtual string getComplaint() const { return this->complaint->getComplaint(); }
+		virtual string getComplaint() const { return this->complaint.getComplaint(); }
 };
 
 class MedicalStall : public Stall
 {
+	public:
+		MedicalStall(int cap) : Stall(cap) {}
 };
 class PulmonaryStall : public MedicalStall
 {
 	public:
+		PulmonaryStall(int cap) : MedicalStall(cap) {}
 		void treatPatient(const Patient<Cough>& patient) const
 		{
 			cout << patient.getName() << " complains of " << patient.getComplaint() << endl;
@@ -204,6 +257,7 @@ class PulmonaryStall : public MedicalStall
 class CardiacStall : public MedicalStall
 {
 	public:
+		CardiacStall(int cap) : MedicalStall(cap) {}
 		void treatPatient(const Patient<MI>& patient) const
 		{
 			cout << patient.getName() << " complains of " << patient.getComplaint() << endl;
@@ -213,6 +267,19 @@ class CardiacStall : public MedicalStall
 
 class MedicalArea : public Area, public Composite<MedicalStall>
 {
+	public:
+		virtual void open() override {
+			Composite<MedicalStall>::open();
+		}
+		virtual void close() override {
+			Composite<MedicalStall>::close();
+		}
+		virtual bool reportStatus() const override {
+			return Composite<MedicalStall>::reportStatus();
+		}
+		virtual int getCapacity() const override {
+			return Composite<MedicalStall>::getCapacity();
+		}
 };
 
 class GeneralStall : public Stall 
@@ -221,8 +288,8 @@ class GeneralStall : public Stall
 		int revenue;
 	public:
 		virtual int unitCost() const = 0;
-		virtual void buyFood() { revenue += unitCost(); }
-		virtual int getRevenue() { return this->revenue; }
+		void buyItem() { revenue += unitCost(); }
+		int getRevenue() { return this->revenue; }
 
 };
 class FoodStall : public GeneralStall 
@@ -248,7 +315,9 @@ class CattleStall : public Stall
 		virtual int getNumCattle() { return this->numCattle; }
 		virtual void moo()
 		{
-			// print numCattle * moo
+			for (int i = 0; i < numCattle; i++)
+				cout << "moo ";
+			cout << endl;
 		}
 };
 
