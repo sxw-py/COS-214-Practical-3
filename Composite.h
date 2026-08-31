@@ -83,15 +83,15 @@ class Composite : public EventComponent, public Subject, public Observer
 			for (auto o : observers)
 				o->medicalEmergency(subject);
 		}
-		virtual void escapedBull(Subject& subject) override
+		virtual void escapedBull(const std::string& location, int numBulls) override
 		{
 			for (auto o : observers)
-				o->escapedBull(subject);
+				o->escapedBull(location, numBulls);
 		}
-		virtual void weatherAlert(Subject& subject) override
+		virtual void weatherAlert(int severity, const std::string& type) override
 		{
 			for (auto o : observers)
-				o->weatherAlert(subject);
+				o->weatherAlert(severity, type);
 		}
 		virtual void capacityAlert(Subject& subject) override
 		{

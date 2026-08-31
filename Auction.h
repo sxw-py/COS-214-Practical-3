@@ -10,6 +10,13 @@ class Tent;
 // that uses Auction's methods must also #include "Tent.h".
 class Auction : public Composite
 {
+    private:
+        bool paused;
+    
+    public:
+        Auction();
+        virtual void weatherAlert(int severity, const std::string& type) override;
+        virtual void escapedBull(const std::strign& location, int numBulls) override;
 };
 
 #endif

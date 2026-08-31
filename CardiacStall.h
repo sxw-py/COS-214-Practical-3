@@ -8,10 +8,13 @@
 
 class CardiacStall : public MedicalStall
 {
+
 	public:
-		CardiacStall(int cap);
+		CardiacStall(int cattle, int cap);
 		void treatPatient(const Patient<MI>& patient) const;
 		virtual void setup(Subject&) override;
-};
+		virtual void weatherAlert(int severity, const std::string& type) override;
+        virtual void escapedBull(const std::string& location, int numBulls) override;
+};	
 
 #endif

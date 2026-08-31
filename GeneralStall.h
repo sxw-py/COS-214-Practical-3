@@ -11,6 +11,8 @@ class GeneralStall : public Stall
 		virtual int unitCost() const = 0;
 		void buyItem();
 		int getRevenue();
+		virtual void weatherAlert(int severity, const std::string& type) override;
+        virtual void escapedBull(const std::string& location, int numBulls) override;
 };
 
 #endif

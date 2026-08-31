@@ -35,11 +35,12 @@ void Subject::medicalEmergency()
 		o->medicalEmergency(*this);
 }
 
-void Subject::escapedBull()
-{
-	for (auto o : observers)
-		o->escapedBull(*this);
+void Subject::setWeatherData(int severity, const std::string& type){
+	currentSeverity = severity;
+	currentWeatherType = type;
+	weatherAlert();  //notify all observers
 }
+
 
 void Subject::weatherAlert()
 {
@@ -47,8 +48,24 @@ void Subject::weatherAlert()
 		o->weatherAlert(*this);
 }
 
+
+void Subject::setBullEscape(const std::string& location, int numBulls){
+	bullLocation = location;
+	this->numBulls = numBulls;
+	escapedBull(); // notify
+}
+
+void Subject::escapedBull()
+{
+	for (auto o : observers)
+		o->escapedBull(*this);
+}
+
 void Subject::capacityAlert()
 {
 	for (auto o : observers)
 		o->capacityAlert(*this);
 }
+
+
+
