@@ -1,3 +1,11 @@
+/**
+ * @file main.cpp
+ * @brief Main execution file for the Agricultural Event Coordination system.
+ *
+ * This file demonstrates the runtime behavior of the system, including
+ * setting up the Composite trees, simulating runtime reorganizations,
+ * and broadcasting Observer notifications for various emergencies and features.
+ */
 #include "headers.h"
 #include "PulmonaryStall.h"
 #include "CardiacStall.h"
@@ -7,6 +15,14 @@
 #include "Auction.h"
 #include <iostream>
 
+/**
+ * @brief Entry point for the application.
+ * 
+ * Simulates various practical requirements including the medical stall usage,
+ * composite tree setups, runtime reorganizations, and observer pattern broadcasts.
+ * 
+ * @return Exit status (0 for success).
+ */
 int main()
 {
 	PulmonaryStall pulm(10);
