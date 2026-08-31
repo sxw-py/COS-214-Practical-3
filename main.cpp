@@ -19,5 +19,10 @@ int main()
 	Patient<MI> g("gonge");
 	ps->treatPatient(p);
 	cs->treatPatient(g);
+	auction.attach(tent);
+	tent->attach(medicalArea);
+	medicalArea->attach(ps);
+	medicalArea->attach(cs);
+	auction.setup();
 
 }

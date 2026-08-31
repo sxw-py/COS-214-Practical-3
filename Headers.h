@@ -8,6 +8,7 @@ using namespace std;
 
 class Subject;
 
+// move these into different files
 // no information gets pulled from subject
 class Observer // implement diff notifications in leaves
 {
@@ -117,6 +118,7 @@ class Composite : public EventComponent, public Subject, public Observer
 	private:
 		vector<T*> children;
 	public:
+		using Subject::setup;
 		virtual void open() override
 		{
 			for (auto child : children)
@@ -165,32 +167,32 @@ class Composite : public EventComponent, public Subject, public Observer
 			for (auto child : children)
 				delete child;
 		}
-		virtual void setup(Subject& subject) 
+		virtual void setup(Subject& subject) override
 		{
 			for (auto o : observers)
 				o->setup(subject);
 		}
-		virtual void shutdown(Subject& subject) 
+		virtual void shutdown(Subject& subject) override
 		{
 			for (auto o : observers)
 				o->shutdown(subject);
 		}
-		virtual void medicalEmergency(Subject& subject) 
+		virtual void medicalEmergency(Subject& subject) override
 		{
 			for (auto o : observers)
 				o->medicalEmergency(subject);
 		}
-		virtual void escapedBull(Subject& subject) 
+		virtual void escapedBull(Subject& subject) override
 		{
 			for (auto o : observers)
 				o->escapedBull(subject);
 		}
-		virtual void weatherAlert(Subject& subject) 
+		virtual void weatherAlert(Subject& subject) override
 		{
 			for (auto o : observers)
 				o->weatherAlert(subject);
 		}
-		virtual void capacityAlert(Subject& subject) 
+		virtual void capacityAlert(Subject& subject) override
 		{
 			for (auto o : observers)
 				o->capacityAlert(subject);
@@ -253,6 +255,14 @@ class PulmonaryStall : public MedicalStall
 			cout << patient.getName() << " complains of " << patient.getComplaint() << endl;
 			cout << "Patient is receiving pulmonary support" << endl;
 		}
+		virtual void setup(Subject&) override
+		{
+			cout << "Pulmonary stall ready" << endl;
+		}
+		virtual void shutdown(Subject&) override
+		{
+			cout << "Pulmonary stall closing" << endl;
+		}
 };
 class CardiacStall : public MedicalStall
 {
@@ -262,6 +272,14 @@ class CardiacStall : public MedicalStall
 		{
 			cout << patient.getName() << " complains of " << patient.getComplaint() << endl;
 			cout << "Patient is receiving cardiac support" << endl;
+		}
+		virtual void setup(Subject&) override
+		{
+			cout << "Cardiac stall ready" << endl;
+		}
+		virtual void shutdown(Subject&) override
+		{
+			cout << "Cardiac stall closing" << endl;
 		}
 };
 
@@ -285,7 +303,7 @@ class MedicalArea : public Area, public Composite<MedicalStall>
 class GeneralStall : public Stall 
 {
 	private:
-		int revenue;
+		int revenue = 0;
 	public:
 		virtual int unitCost() const = 0;
 		void buyItem() { revenue += unitCost(); }
