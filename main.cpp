@@ -1,10 +1,21 @@
 /**
  * @file main.cpp
- * @brief Main execution file for the Agricultural Event Coordination system.
+ * @brief Main execution file for the Cattle Auction system.
  *
  * This file demonstrates the runtime behavior of the system, including
  * setting up the Composite trees, simulating runtime reorganizations,
  * and broadcasting Observer notifications for various emergencies and features.
+ *
+ * @mainpage Cattle Auction Documentation
+ * 
+ * Welcome to the Doxygen documentation for the Cattle Auction system!
+ * 
+ * ### Overview
+ * This project models an agricultural show using various design patterns:
+ * - **Composite Pattern:** Used to structure areas (like MedicalArea and CattleArea) and stalls in a tree hierarchy.
+ * - **Observer Pattern:** Used to broadcast emergency events (like weather alerts or escaped bulls) to all connected stalls.
+ * 
+ * Navigate via the **Classes** or **Files** tabs at the top to explore the codebase.
  */
 #include "headers.h"
 #include "PulmonaryStall.h"

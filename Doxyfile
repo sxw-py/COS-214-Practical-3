@@ -1,4 +1,4 @@
-PROJECT_NAME           = "Agricultural Event Coordination"
+PROJECT_NAME           = "Cattle Auction"
 OUTPUT_DIRECTORY       = docs
 RECURSIVE              = YES
 EXTRACT_ALL            = NO
