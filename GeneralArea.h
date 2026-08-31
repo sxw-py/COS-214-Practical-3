@@ -5,7 +5,7 @@
 #include "Composite.h"
 #include "GeneralStall.h"
 
-class GeneralArea : public Area, public Composite<GeneralStall>
+class GeneralArea : public Composite
 {
 };
 
