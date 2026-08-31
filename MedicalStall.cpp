@@ -5,7 +5,7 @@ MedicalStall::MedicalStall(int cap) : Stall(cap)
 {
 }
 
-void MedicalStall::capacityAlert(Subject& subject)
+void MedicalStall::capacityAlert(Subject&)
 {
 	std::cout << "[MedicalStall] Received capacity alert! Preparing for incoming triage." << std::endl;
 }

@@ -59,7 +59,7 @@ int main()
 	// Note: We would instantiate FoodStall to test vipArrival, but it currently lacks constructors.
 	// However, the function vipArrival is fully implemented in GeneralStall!
 
-	std::cout << "\n\n=== TASK 8: TEAMMATE'S SCENARIO ===" << std::endl;
+	std::cout << "\n\n=== TASK 8:SCENARIO ===" << std::endl;
 	Auction auction;
 	Tent* tent = new Tent();
 	auction.addChild(tent);

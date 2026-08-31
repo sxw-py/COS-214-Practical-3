@@ -18,9 +18,9 @@ class Observer
 		virtual void capacityAlert(Subject&) {};
 		
 		// Task 4.4 Original Features (Push Model)
-		virtual void vipArrival(int vipLevel) {};
-		virtual void quarantine(int days) {};
-		virtual void feedingTime(std::string foodType) {};
+		virtual void vipArrival(int) {};
+		virtual void quarantine(int) {};
+		virtual void feedingTime(std::string) {};
 		
 		virtual ~Observer() = default;
 };
