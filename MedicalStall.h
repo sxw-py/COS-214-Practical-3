@@ -7,6 +7,7 @@ class MedicalStall : public Stall
 {
 	public:
 		MedicalStall(int cap);
+		virtual void capacityAlert(Subject& subject) override;
 };
 
 #endif

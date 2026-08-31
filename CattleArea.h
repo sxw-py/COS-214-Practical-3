@@ -5,7 +5,7 @@
 #include "Composite.h"
 #include "CattleStall.h"
 
-class CattleArea : public Area, public Composite<CattleStall>
+class CattleArea : public Composite
 {
 };
 

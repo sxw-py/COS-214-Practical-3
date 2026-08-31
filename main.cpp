@@ -16,19 +16,32 @@ int main()
 	pulm.treatPatient(p1);
 	card.treatPatient(p2);
 
-	CattleStall cattle(3, 20);
-	cattle.moo();
-
+	std::cout << "--- Initial Setup ---" << std::endl;
 	MedicalArea medArea;
-	medArea.addChild(new PulmonaryStall(8));
-	medArea.addChild(new CardiacStall(4));
-	medArea.open();
-	std::cout << "Medical area open: " << medArea.reportStatus() << std::endl;
-	std::cout << "Medical area capacity: " << medArea.getCapacity() << std::endl;
+	CattleArea cattleArea;
 
-	Auction auction;
-	auction.addChild(new Tent()); // Composite takes ownership and deletes children
-	std::cout << "Auction capacity: " << auction.getCapacity() << std::endl;
+	// We create a dynamically allocated stall because Composite takes ownership
+	MedicalStall* rapidResponseTeam = new MedicalStall(5);
+	
+	// Add to Medical Area (Composite Tree) and register for notices (Observer)
+	std::cout << "Adding Rapid Response Team to Medical Area..." << std::endl;
+	medArea.addChild(rapidResponseTeam);
+	medArea.attach(rapidResponseTeam);
+	
+	std::cout << "\n--- Emergency: Escaped Bull in Cattle Area! ---" << std::endl;
+	cattleArea.escapedBull(); // Broadcasts to its observers (currently none)
+	
+	std::cout << "\n--- Runtime Reorganisation: Transferring Medical Team ---" << std::endl;
+	std::cout << "1. Removing from Medical Area..." << std::endl;
+	medArea.removeChild(rapidResponseTeam);
+	medArea.detach(rapidResponseTeam);
+	
+	std::cout << "2. Reassigning to Cattle Area..." << std::endl;
+	cattleArea.addChild(rapidResponseTeam);
+	cattleArea.attach(rapidResponseTeam);
+	
+	std::cout << "\n--- Situation Update ---" << std::endl;
+	cattleArea.capacityAlert(); // Now the rapid response team should receive this!
 
 	return 0;
 }

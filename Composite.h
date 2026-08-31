@@ -6,16 +6,18 @@
 #include "Subject.h"
 #include "Observer.h"
 
-// NOTE: Composite is a class template, so its definition must remain
-// entirely in this header (templates are compiled per translation unit
-// on use; there is no separate .cpp for it).
-template <typename T>
+
 class Composite : public EventComponent, public Subject, public Observer
 {
 	private:
-		std::vector<T*> children;
+		std::vector<EventComponent*> children;
 	public:
 		using Subject::setup;
+		using Subject::shutdown;
+		using Subject::medicalEmergency;
+		using Subject::escapedBull;
+		using Subject::weatherAlert;
+		using Subject::capacityAlert;
 
 		virtual void open() override
 		{
@@ -42,13 +44,13 @@ class Composite : public EventComponent, public Subject, public Observer
 				sum += child->getCapacity();
 			return sum;
 		}
-		virtual void addChild(T* child)
+		virtual void addChild(EventComponent* child)
 		{
 			removeChild(child);
 			children.push_back(child);
 		}
 
-		virtual T* removeChild(T* child)
+		virtual EventComponent* removeChild(EventComponent* child)
 		{
 			for (auto it = children.begin(); it != children.end(); )
 			{

@@ -4,7 +4,7 @@
 #include "Composite.h"
 #include "Area.h"
 
-class Tent : public Composite<Area>
+class Tent : public Composite
 {
 };
 
