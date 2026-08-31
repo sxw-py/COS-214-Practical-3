@@ -13,6 +13,7 @@ class GeneralStall : public Stall
 {
 	private:
 		int revenue;
+		bool serviceSlowed;
 	public:
 		/**
 		 * @brief Returns the cost of a single unit sold by the stall.
@@ -30,10 +31,16 @@ class GeneralStall : public Stall
 		 * @return Current revenue.
 		 */
 		int getRevenue();
-		virtual void setup(Subject&) override;
-		virtual void shutdown(Subject&) override;
-		virtual void weatherAlert(Subject&) override;
+		GeneralStall(int cap);
+		bool isServiceSlowed() const;
+		virtual void weatherAlert(int severity, const std::string& type) override;
+        virtual void escapedBull(const std::string& location, int numBulls) override;
+		virtual void medicalEmergency(int severity, const std::string& injuryType) override;
+		virtual void capacityAlert(int currentCount, int maxCapacity) override;
+		virtual void setup() override;
+		virtual void shutdown() override;
 		virtual void vipArrival(int vipLevel) override;
+
 };
 
 #endif

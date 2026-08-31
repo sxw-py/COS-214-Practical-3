@@ -102,35 +102,40 @@ class Composite : public EventComponent, public Subject, public Observer
 				delete child;
 		}
 
-		virtual void setup(Subject& subject) override
+		virtual void setup() override
 		{
 			for (auto o : observers)
-				o->setup(subject);
+				o->setup();
 		}
-		virtual void shutdown(Subject& subject) override
+
+		virtual void shutdown() override
 		{
 			for (auto o : observers)
-				o->shutdown(subject);
+				o->shutdown();
 		}
-		virtual void medicalEmergency(Subject& subject) override
+
+		virtual void medicalEmergency(int severity, const std::string& injuryType) override
 		{
 			for (auto o : observers)
-				o->medicalEmergency(subject);
+				o->medicalEmergency(severity, injuryType);
 		}
-		virtual void escapedBull(Subject& subject) override
+
+		virtual void escapedBull(const std::string& location, int numBulls) override
 		{
 			for (auto o : observers)
-				o->escapedBull(subject);
+				o->escapedBull(location, numBulls);
 		}
-		virtual void weatherAlert(Subject& subject) override
+
+		virtual void weatherAlert(int severity, const std::string& type) override
 		{
 			for (auto o : observers)
-				o->weatherAlert(subject);
+				o->weatherAlert(severity, type);
 		}
-		virtual void capacityAlert(Subject& subject) override
+
+		virtual void capacityAlert(int currentCount, int maxCapacity) override
 		{
 			for (auto o : observers)
-				o->capacityAlert(subject);
+				o->capacityAlert(currentCount, maxCapacity);
 		}
 		
 		virtual void vipArrival(int vipLevel) override

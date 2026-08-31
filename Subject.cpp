@@ -20,19 +20,62 @@ void Subject::detach(Observer* observer)
 void Subject::setup()
 {
 	for (auto o : observers)
-		o->setup(*this);
+		o->setup();
 }
 
 void Subject::shutdown()
 {
 	for (auto o : observers)
-		o->shutdown(*this);
+		o->shutdown();
+}
+
+void Subject::setMedicalEmergency(int severity, const std::string& injuryType){
+	currentSeverity = severity;
+	this->injuryType = injuryType;
+	medicalEmergency();
 }
 
 void Subject::medicalEmergency()
 {
 	for (auto o : observers)
-		o->medicalEmergency(*this);
+		o->medicalEmergency(currentSeverity, injuryType);
+}
+
+void Subject::setWeatherData(int severity, const std::string& type){
+	currentSeverity = severity;
+	currentWeatherType = type;
+	weatherAlert();  //notify all observers
+}
+
+void Subject::weatherAlert()
+{
+	for (auto o : observers)
+		o->weatherAlert(currentSeverity, currentWeatherType);
+}
+
+
+void Subject::setBullEscape(const std::string& location, int numBulls){
+	bullLocation = location;
+	this->numBulls = numBulls;
+	escapedBull(); // notify
+}
+
+void Subject::escapedBull()
+{
+	for (auto o : observers)
+		o->escapedBull(bullLocation, numBulls);
+}
+
+void Subject::setCapacityAlert(int currentCount, int maxCapacity){
+	this->currentCount = currentCount;
+	this->maxCapacity = maxCapacity;
+	capacityAlert();
+}
+
+void Subject::capacityAlert()
+{
+	for (auto o : observers)
+		o->capacityAlert(currentCount,maxCapacity);
 }
 
 void Subject::vipArrival(int vipLevel)
@@ -53,20 +96,3 @@ void Subject::feedingTime(std::string foodType)
 		o->feedingTime(foodType);
 }
 
-void Subject::escapedBull()
-{
-	for (auto o : observers)
-		o->escapedBull(*this);
-}
-
-void Subject::weatherAlert()
-{
-	for (auto o : observers)
-		o->weatherAlert(*this);
-}
-
-void Subject::capacityAlert()
-{
-	for (auto o : observers)
-		o->capacityAlert(*this);
-}
