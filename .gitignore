@@ -1,1 +1,6 @@
 docs/
+*.pdf
+*.swp
+*.swo
+*.png:Zone.Identifier
+Teammate.txt
