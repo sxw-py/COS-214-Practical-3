@@ -1,9 +1,9 @@
 CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra
+CXXFLAGS := -std=c++11 -Wall -Wextra
 
 SRCS := $(filter-out main.cpp, $(wildcard *.cpp))
 OBJS := $(SRCS:.cpp=.o)
-TARGET := main
+TARGET := eventflow
 
 all: $(TARGET)
 

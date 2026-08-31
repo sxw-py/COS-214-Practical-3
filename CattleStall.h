@@ -14,7 +14,7 @@ class CattleStall : public Stall
 	private:
 		int numCattle;
 		bool isSheltered;
-
+		bool accessLimited;
 	public:
 		/**
 		 * @brief Constructor for CattleStall.
@@ -28,12 +28,14 @@ class CattleStall : public Stall
 		 * @return The number of cattle.
 		 */
 		virtual int getNumCattle();
+		bool isAccessLimited() const;
 		virtual void moo();
 		virtual void weatherAlert(int severity, const std::string& type) override;
         virtual void escapedBull(const std::string& location, int numBulls) override;
-		virtual void setup(Subject&) override;
-		virtual void shutdown(Subject&) override;
-		virtual void capacityAlert(Subject&) override;
+		virtual void medicalEmergency(int severity, const std::string& injuryType) override;
+        virtual void capacityAlert(int currentCount, int maxCapacity) override;
+        virtual void setup() override;
+        virtual void shutdown() override;
 		virtual void quarantine(int days) override;
 		virtual void feedingTime(std::string foodType) override;
 

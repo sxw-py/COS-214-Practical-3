@@ -13,6 +13,10 @@
 #include "MedicalArea.h"
 #include "Tent.h"
 #include "Auction.h"
+#include "GeneralArea.h"
+#include "CattleArea.h"
+#include "FoodStall.h"
+#include "DrinkStall.h"
 #include <iostream>
 
 /**
@@ -45,7 +49,7 @@ int main()
 	medArea.attach(rapidResponseTeam);
 	
 	std::cout << "\n--- Emergency: Escaped Bull in Cattle Area! ---" << std::endl;
-	cattleArea.escapedBull(); // Broadcasts to its observers (currently none)
+	cattleArea.escapedBull("Unknown location", 1); // Broadcasts to its observers (currently none)
 	
 	std::cout << "\n--- Runtime Reorganisation: Transferring Medical Team ---" << std::endl;
 	std::cout << "1. Removing from Medical Area..." << std::endl;
@@ -57,7 +61,7 @@ int main()
 	cattleArea.attach(rapidResponseTeam);
 	
 	std::cout << "\n--- Situation Update ---" << std::endl;
-	cattleArea.capacityAlert(); // Now the rapid response team should receive this!
+	cattleArea.capacityAlert(50, 100); // Now the rapid response team should receive this!
 
 	std::cout << "\n--- Task 4.4: Original Features Demonstration ---" << std::endl;
 	
@@ -99,6 +103,60 @@ int main()
 	medicalArea->attach(cs);
 	auction.setup();
 	std::cout << "Auction capacity: " << auction.getCapacity() << std::endl;
+
+
+	std::cout << "\n\n=== TESTING RULES: GeneralArea + CattleArea additions ===" << std::endl;
+	GeneralArea* genArea = new GeneralArea();
+	CattleArea* cattleAreaFinal = new CattleArea();
+	tent->addChild(genArea);
+	tent->addChild(cattleAreaFinal);
+	tent->attach(genArea);
+	tent->attach(cattleAreaFinal);
+
+	FoodStall* food = new FoodStall(15);
+	DrinkStall* drink = new DrinkStall(15);
+	genArea->addChild(food);
+	genArea->addChild(drink);
+	genArea->attach(food);
+	genArea->attach(drink);
+
+	CattleStall* cattle = new CattleStall(15, 20);
+	cattleAreaFinal->addChild(cattle);
+	cattleAreaFinal->attach(cattle);
+
+	std::cout << "\n=== RULE 1: WEATHER ALERT (severity 8) ===" << std::endl;
+	auction.setWeatherData(8, "storm");
+	std::cout << "Auction paused: " << auction.isPaused() << std::endl;
+	std::cout << "Tent weather-protected: " << tent->isWeatherProtected() << std::endl;
+	std::cout << "Food stall open (expect 0): " << food->reportStatus() << std::endl;
+	std::cout << "Medical area open (expect 1): " << medicalArea->reportStatus() << std::endl;
+
+	std::cout << "\n=== RULE 2: ESCAPED BULL ===" << std::endl;
+	cattleAreaFinal->setBullEscape("North Pen", 2);
+	std::cout << "Auction paused: " << auction.isPaused() << std::endl;
+	std::cout << "Food stall open (expect 0): " << food->reportStatus() << std::endl;
+	std::cout << "Medical area prepared: " << medicalArea->isPreparedForInjuries() << std::endl;
+
+	std::cout << "\n=== RULE 3: MEDICAL EMERGENCY ===" << std::endl;
+	auction.setMedicalEmergency(6, "cardiac arrest");
+	std::cout << "Cardiac protocol active: " << cs->isCardiacProtocolActive() << std::endl;
+	std::cout << "Cattle stall open (expect unchanged/1): " << cattle->reportStatus() << std::endl;
+
+	std::cout << "\n=== RULE 4: CAPACITY ALERT ===" << std::endl;
+	auction.setCapacityAlert(95, 100);
+	std::cout << "Food queue managed: " << food->isQueueManaged() << std::endl;
+	std::cout << "Cattle access limited: " << cattle->isAccessLimited() << std::endl;
+
+	std::cout << "\n=== RUNTIME REORGANISATION: cattle -> genArea ===" << std::endl;
+	cattleAreaFinal->removeChild(cattle);
+	cattleAreaFinal->detach(cattle);
+	genArea->addChild(cattle);
+	genArea->attach(cattle);
+	std::cout << "GeneralArea capacity now: " << genArea->getCapacity() << std::endl;
+
+	std::cout << "\n=== SHUTDOWN ===" << std::endl;
+	auction.shutdown();
+	std::cout << "Auction closed: " << !auction.reportStatus() << std::endl;
 
 	return 0;
 }

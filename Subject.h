@@ -23,10 +23,17 @@ class Subject
 		 * Observers MUST be detached before they are destroyed.
 		 */
 		std::vector<Observer*> observers;
+		//for Task 4.1
 		int currentSeverity;
 		std::string currentWeatherType;
+
 		std::string bullLocation;
 		int numBulls;
+
+		std::string injuryType;
+
+		int currentCount;
+		int maxCapacity;
 
 	public:
 		static const int MaxSeverity =10;
@@ -44,17 +51,22 @@ class Subject
 		 * @param observer Observer to remove.
 		 */
 		virtual void detach(Observer* observer);
+
+		//Task 4.1
 		virtual void setWeatherData(int severity, const std::string& type);
 		virtual void weatherAlert();
 
 		virtual void setBullEscape(const std::string& location, int numBulls);
 		virtual void escapedBull();
 		
+		virtual void setMedicalEmergency(int severity, const std::string& injuryType);
+		virtual void medicalEmergency();
+
+		virtual void setCapacityAlert(int currentCount, int maxCapacity);
+        virtual void capacityAlert();
+
 		virtual void setup();
 		virtual void shutdown();
-		virtual void medicalEmergency();
-	
-		virtual void capacityAlert();
 		
 		// Task 4.4 Original Features
 		virtual void vipArrival(int vipLevel);

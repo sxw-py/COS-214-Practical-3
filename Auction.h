@@ -12,11 +12,17 @@ class Auction : public Composite
 {
     private:
         bool paused;
+        int pendingBids;
     
     public:
         Auction();
+        bool isPaused() const;
         virtual void weatherAlert(int severity, const std::string& type) override;
-        virtual void escapedBull(const std::strign& location, int numBulls) override;
+        virtual void escapedBull(const std::string& location, int numBulls) override;
+        virtual void medicalEmergency(int severity, const std::string& injuryType) override;
+        virtual void capacityAlert(int currentCount, int maxCapacity) override;
+        virtual void setup() override;
+        virtual void shutdown() override;
 };
 
 #endif
