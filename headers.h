@@ -9,7 +9,6 @@
 #include "Subject.h"
 #include "Leaf.h"
 #include "Composite.h"
-#include "Area.h"
 #include "Tent.h"
 #include "Auction.h"
 #include "Stall.h"

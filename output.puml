@@ -1,0 +1,382 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+class Auction {
+	+Auction()
+	+isPaused() : bool {query}
+	-paused : bool
+	-pendingBids : int
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+class CardiacStall {
+	+CardiacStall(int cap)
+	-cardiacProtocolActive : bool
+	+isCardiacProtocolActive() : bool {query}
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+treatPatient(const Patient<MI>& patient) : void {query}
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+class CattleArea {
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+class CattleStall {
+	+CattleStall(int numCattle, int cap)
+	-accessLimited : bool
+	+isAccessLimited() : bool {query}
+	-isSheltered : bool
+	+getNumCattle() : int
+	-numCattle : int
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+feedingTime(std::string foodType) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+moo() : void
+	+quarantine(int days) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+abstract class Complaint {
+	+~Complaint()
+	+{abstract} getComplaint() : std::string {query}
+}
+
+
+class Composite {
+	+~Composite()
+	+removeChild(EventComponent* child) : EventComponent*
+	+reportStatus() : bool {query}
+	+getCapacity() : int {query}
+	-children : std::vector<EventComponent*>
+	+addChild(EventComponent* child) : void
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+close() : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+feedingTime(std::string foodType) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+open() : void
+	+quarantine(int days) : void
+	+setup() : void
+	+shutdown() : void
+	+vipArrival(int vipLevel) : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+class Cough {
+	+getComplaint() : std::string {query}
+}
+
+
+class DrinkStall {
+	+DrinkStall(int cap)
+	-drinksSecured : bool
+	+unitCost() : int {query}
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+abstract class EventComponent {
+	+~EventComponent()
+	+{abstract} reportStatus() : bool {query}
+	+{abstract} getCapacity() : int {query}
+	+{abstract} close() : void
+	+{abstract} open() : void
+}
+
+
+class FoodStall {
+	+FoodStall(int cap)
+	-foodSecured : bool
+	+isQueueManaged() : bool {query}
+	-queueManaged : bool
+	+unitCost() : int {query}
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+class GeneralArea {
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+feedingTime(std::string foodType) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+quarantine(int days) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+abstract class GeneralStall {
+	+GeneralStall(int cap)
+	+isServiceSlowed() : bool {query}
+	-serviceSlowed : bool
+	+getRevenue() : int
+	-revenue : int
+	+{abstract} unitCost() : int {query}
+	+buyItem() : void
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+vipArrival(int vipLevel) : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+class Leaf {
+	+Leaf(int cap)
+	+~Leaf()
+	#isOpen : bool
+	+reportStatus() : bool {query}
+	#capacity : int
+	+getCapacity() : int {query}
+	+close() : void
+	+open() : void
+}
+
+
+class MI {
+	+getComplaint() : std::string {query}
+}
+
+
+class MedicalArea {
+	+MedicalArea()
+	-bedsPrepared : bool
+	-emergencyProtocolActive : bool
+	+isBedsPrepared() : bool {query}
+	+isPreparedForInjuries() : bool {query}
+	-preparedForInjuries : bool
+	+reportStatus() : bool {query}
+	+getCapacity() : int {query}
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+close() : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+open() : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+class MedicalStall {
+	+MedicalStall(int cap)
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+class Observer {
+	+~Observer()
+	-subjects : std::vector<Subject*>
+	+addSubject(Subject*) : void
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+feedingTime(std::string) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+quarantine(int) : void
+	+removeSubject(Subject*) : void
+	+setup() : void
+	+shutdown() : void
+	+vipArrival(int) : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+class Patient <template<typename T>> {
+	+Patient(std::string name)
+	-complaint : T
+	+getComplaint() : std::string {query}
+	+getName() : std::string {query}
+	-name : std::string
+}
+
+
+class PulmonaryStall {
+	+PulmonaryStall(int cap)
+	-emergencyProtocolActive : bool
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+treatPatient(const Patient<Cough>& patient) : void {query}
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+class Stall {
+	+Stall(int cap)
+}
+
+
+class Subject {
+	+~Subject()
+	#currentCount : int
+	#currentSeverity : int
+	#maxCapacity : int
+	#numBulls : int
+	+{static} MaxSeverity : static const int
+	+{static} MoveThreshold : static const int
+	#bullLocation : std::string
+	#currentWeatherType : std::string
+	#injuryType : std::string
+	#observers : std::vector<Observer*>
+	+attach(Observer* o) : void
+	+capacityAlert() : void
+	+detach(Observer* observer) : void
+	+escapedBull() : void
+	+feedingTime(std::string foodType) : void
+	+medicalEmergency() : void
+	+quarantine(int days) : void
+	+setBullEscape(const std::string& location, int numBulls) : void
+	+setCapacityAlert(int currentCount, int maxCapacity) : void
+	+setMedicalEmergency(int severity, const std::string& injuryType) : void
+	+setWeatherData(int severity, const std::string& type) : void
+	+setup() : void
+	+shutdown() : void
+	+vipArrival(int vipLevel) : void
+	+weatherAlert() : void
+}
+
+
+class Tent {
+	+Tent()
+	+isWeatherProtected() : bool {query}
+	-weatherProtectionActive : bool
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+Complaint <|-- Cough
+
+
+Complaint <|-- MI
+
+
+Composite <|-- Auction
+
+
+Composite <|-- CattleArea
+
+
+Composite <|-- GeneralArea
+
+
+Composite <|-- MedicalArea
+
+
+Composite <|-- Tent
+
+
+EventComponent <|-- Composite
+
+
+EventComponent <|-- Leaf
+
+
+GeneralStall <|-- DrinkStall
+
+
+GeneralStall <|-- FoodStall
+
+
+Leaf <|-- Stall
+
+
+MedicalStall <|-- CardiacStall
+
+
+MedicalStall <|-- PulmonaryStall
+
+
+Observer <|-- Composite
+
+
+Observer <|-- Leaf
+
+
+Stall <|-- CattleStall
+
+
+Stall <|-- GeneralStall
+
+
+Stall <|-- MedicalStall
+
+
+Subject <|-- Composite
+
+
+
+
+
+/' Aggregation relationships '/
+
+Composite o-- EventComponent
+
+
+Observer o-- Subject
+
+
+Subject o-- Observer
+
+
+
+
+
+
+/' Nested objects '/
+
+
+
+@enduml
