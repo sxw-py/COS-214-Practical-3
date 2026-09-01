@@ -9,11 +9,6 @@
 
 int main()
 {
-	PulmonaryStall pulm(10);
-	CardiacStall card(5);
-	Patient<Cough> p1("Alice");
-	Patient<MI> p2("Bob");
-	pulm.treatPatient(p1);
 	card.treatPatient(p2);
 
 	CattleStall cattle(3, 20);

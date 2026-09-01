@@ -1,0 +1,279 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+abstract class Area {
+	+~Area()
+	+{abstract} reportStatus() : bool {query}
+	+{abstract} getCapacity() : int {query}
+	+{abstract} close() : void
+	+{abstract} open() : void
+}
+
+
+class Auction {
+}
+
+
+class CardiacStall {
+	+CardiacStall(int cap)
+	+treatPatient(const Patient<MI>& patient) : void {query}
+}
+
+
+class CattleArea {
+}
+
+
+class CattleStall {
+	+CattleStall(int numCattle, int cap)
+	+getNumCattle() : int
+	-numCattle : int
+	+capacityAlert(Subject &) : void
+	+escapedBull(Subject &) : void
+	+moo() : void
+	+setup(Subject &) : void
+	+shutdown(Subject &) : void
+}
+
+
+abstract class Complaint {
+	+~Complaint()
+	+{abstract} getComplaint() : std::string {query}
+}
+
+
+class Composite <template<typename T>> {
+	+~Composite()
+	+removeChild(T* child) : T*
+	+reportStatus() : bool {query}
+	+getCapacity() : int {query}
+	-children : std::vector<T*>
+	+addChild(T* child) : void
+	+capacityAlert(Subject& subject) : void
+	+close() : void
+	+escapedBull(Subject& subject) : void
+	+medicalEmergency(Subject& subject) : void
+	+open() : void
+	+setup(Subject& subject) : void
+	+shutdown(Subject& subject) : void
+	+weatherAlert(Subject& subject) : void
+}
+
+
+class Cough {
+	+getComplaint() : std::string {query}
+}
+
+
+class DrinkStall {
+	+unitCost() : int {query}
+}
+
+
+abstract class EventComponent {
+	+~EventComponent()
+	+{abstract} reportStatus() : bool {query}
+	+{abstract} getCapacity() : int {query}
+	+{abstract} close() : void
+	+{abstract} open() : void
+}
+
+
+class FoodStall {
+	+unitCost() : int {query}
+}
+
+
+class GeneralArea {
+}
+
+
+abstract class GeneralStall {
+	+getRevenue() : int
+	-revenue : int
+	+{abstract} unitCost() : int {query}
+	+buyItem() : void
+	+setup(Subject &) : void
+	+shutdown(Subject &) : void
+	+weatherAlert(Subject &) : void
+}
+
+
+class Leaf {
+	+Leaf(int cap)
+	+~Leaf()
+	#isOpen : bool
+	+reportStatus() : bool {query}
+	#capacity : int
+	+getCapacity() : int {query}
+	+close() : void
+	+open() : void
+}
+
+
+class MI {
+	+getComplaint() : std::string {query}
+}
+
+
+class MedicalArea {
+	+reportStatus() : bool {query}
+	+getCapacity() : int {query}
+	+close() : void
+	+open() : void
+}
+
+
+class MedicalStall {
+	+MedicalStall(int cap)
+	+medicalEmergency(Subject &) : void
+	+setup(Subject &) : void
+	+shutdown(Subject &) : void
+}
+
+
+class Observer {
+	+~Observer()
+	+capacityAlert(Subject &) : void
+	+escapedBull(Subject &) : void
+	+medicalEmergency(Subject &) : void
+	+setup(Subject &) : void
+	+shutdown(Subject &) : void
+	+weatherAlert(Subject &) : void
+}
+
+
+class Patient <template<typename T>> {
+	+Patient(std::string name)
+	-complaint : T
+	+getComplaint() : std::string {query}
+	+getName() : std::string {query}
+	-name : std::string
+}
+
+
+class PulmonaryStall {
+	+PulmonaryStall(int cap)
+	+treatPatient(const Patient<Cough>& patient) : void {query}
+}
+
+
+class Stall {
+	+Stall(int cap)
+}
+
+
+class Subject {
+	+~Subject()
+	#observers : std::vector<Observer*>
+	+attach(Observer* o) : void
+	+capacityAlert() : void
+	+detach(Observer* observer) : void
+	+escapedBull() : void
+	+medicalEmergency() : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert() : void
+}
+
+
+class Tent {
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+Area <|-- CattleArea
+
+
+Area <|-- GeneralArea
+
+
+Area <|-- MedicalArea
+
+
+Complaint <|-- Cough
+
+
+Complaint <|-- MI
+
+
+Composite <|-- Auction
+
+
+Composite <|-- CattleArea
+
+
+Composite <|-- GeneralArea
+
+
+Composite <|-- MedicalArea
+
+
+Composite <|-- Tent
+
+
+EventComponent <|-- Composite
+
+
+EventComponent <|-- Leaf
+
+
+GeneralStall <|-- DrinkStall
+
+
+GeneralStall <|-- FoodStall
+
+
+Leaf <|-- Stall
+
+
+MedicalStall <|-- CardiacStall
+
+
+MedicalStall <|-- PulmonaryStall
+
+
+Observer <|-- Composite
+
+
+Observer <|-- Leaf
+
+
+Stall <|-- CattleStall
+
+
+Stall <|-- GeneralStall
+
+
+Stall <|-- MedicalStall
+
+
+Subject <|-- Composite
+
+
+
+
+
+/' Aggregation relationships '/
+
+Subject o-- Observer
+
+
+
+
+
+
+/' Nested objects '/
+
+
+
+@enduml
