@@ -16,4 +16,10 @@ $(TARGET): main.o $(OBJS)
 clean:
 	rm -f *.o $(TARGET)
 
-.PHONY: all clean
+run: $(TARGET)
+	./$(TARGET)
+
+valgrind: $(TARGET)
+	valgrind --leak-check=full ./$(TARGET)
+
+.PHONY: all clean run valgrind

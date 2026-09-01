@@ -15,7 +15,7 @@ void Auction::weatherAlert(int severity, const std::string& type){
     this->Subject::weatherAlert();
 }
 
-void Auction::escapedBull(const std::string& location, int numBull){
+void Auction::escapedBull(const std::string& location, int numBulls){
     paused = true;
     std::cout << "Auction: Paused - Bulls escape at " << location << " ! (" << numBulls << " bulls loose!)" << std::endl;
     this->setBullEscape(location, numBulls);
