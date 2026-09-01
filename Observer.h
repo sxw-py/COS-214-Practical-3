@@ -1,6 +1,7 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
+#include <vector>
 #include <string>
 
 class Subject;
@@ -14,7 +15,11 @@ class Subject;
  */
 class Observer
 {
+	private:
+		std::vector<Subject*> subjects;
 	public:
+		virtual void addSubject(Subject*);
+		virtual void removeSubject(Subject*);
 		virtual void setup() {};
 		virtual void shutdown() {};
 		virtual void medicalEmergency(int severity, const std::string& injuryType) {};
@@ -40,7 +45,7 @@ class Observer
 		 */
 		virtual void feedingTime(std::string) {};
 		
-		virtual ~Observer() = default;
+		virtual ~Observer();
 };
 
 #endif

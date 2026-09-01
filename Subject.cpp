@@ -4,6 +4,7 @@ void Subject::attach(Observer* o)
 {
 	detach(o);
 	observers.push_back(o);
+	o->addSubject(this);
 }
 
 void Subject::detach(Observer* observer)
@@ -11,7 +12,10 @@ void Subject::detach(Observer* observer)
 	for (auto it = observers.begin(); it != observers.end(); )
 	{
 		if (*it == observer)
+		{
 			it = observers.erase(it);
+			observer->removeSubject(this);
+		}
 		else
 			it++;
 	}

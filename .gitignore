@@ -4,3 +4,5 @@ docs/
 *.swo
 *.png:Zone.Identifier
 Teammate.txt
+.venv/*
+*.o
