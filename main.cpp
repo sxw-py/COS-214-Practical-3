@@ -1,21 +1,10 @@
 /**
  * @file main.cpp
- * @brief Main execution file for the Cattle Auction system.
+ * @brief Main execution file for the Agricultural Event Coordination system.
  *
  * This file demonstrates the runtime behavior of the system, including
  * setting up the Composite trees, simulating runtime reorganizations,
  * and broadcasting Observer notifications for various emergencies and features.
- *
- * @mainpage Cattle Auction Documentation
- * 
- * Welcome to the Doxygen documentation for the Cattle Auction system!
- * 
- * ### Overview
- * This project models an agricultural show using various design patterns:
- * - **Composite Pattern:** Used to structure areas (like MedicalArea and CattleArea) and stalls in a tree hierarchy.
- * - **Observer Pattern:** Used to broadcast emergency events (like weather alerts or escaped bulls) to all connected stalls.
- * 
- * Navigate via the **Classes** or **Files** tabs at the top to explore the codebase.
  */
 #include "headers.h"
 #include "PulmonaryStall.h"
@@ -48,48 +37,44 @@ int main()
 	card.treatPatient(p2);
 
 	std::cout << "--- Initial Setup ---" << std::endl;
-	
-	Auction mainAuction;
-	MedicalArea* medArea = new MedicalArea();
-	CattleArea* cattleArea = new CattleArea();
-	mainAuction.addChild(medArea);
-	mainAuction.addChild(cattleArea);
+	MedicalArea medArea;
+	CattleArea cattleArea;
 
 	// We create a dynamically allocated stall because Composite takes ownership
 	MedicalStall* rapidResponseTeam = new MedicalStall(5);
 	
 	// Add to Medical Area (Composite Tree) and register for notices (Observer)
 	std::cout << "Adding Rapid Response Team to Medical Area..." << std::endl;
-	medArea->addChild(rapidResponseTeam);
-	medArea->attach(rapidResponseTeam);
+	medArea.addChild(rapidResponseTeam);
+	medArea.attach(rapidResponseTeam);
 	
 	std::cout << "\n--- Emergency: Escaped Bull in Cattle Area! ---" << std::endl;
-	mainAuction.escapedBull("Main Gate", 1); // Broadcasts to its observers (cascades)
+	cattleArea.escapedBull("Unknown location", 1); // Broadcasts to its observers (currently none)
 	
 	std::cout << "\n--- Runtime Reorganisation: Transferring Medical Team ---" << std::endl;
 	std::cout << "1. Removing from Medical Area..." << std::endl;
-	medArea->removeChild(rapidResponseTeam);
-	medArea->detach(rapidResponseTeam);
+	medArea.removeChild(rapidResponseTeam);
+	medArea.detach(rapidResponseTeam);
 	
 	std::cout << "2. Reassigning to Cattle Area..." << std::endl;
-	cattleArea->addChild(rapidResponseTeam);
-	cattleArea->attach(rapidResponseTeam);
+	cattleArea.addChild(rapidResponseTeam);
+	cattleArea.attach(rapidResponseTeam);
 	
 	std::cout << "\n--- Situation Update ---" << std::endl;
-	cattleArea->capacityAlert(25, 20); // Now the rapid response team should receive this!
+	cattleArea.capacityAlert(50, 100); // Now the rapid response team should receive this!
 
 	std::cout << "\n--- Task 4.4: Original Features Demonstration ---" << std::endl;
 	
 	// Create a new Cattle Stall directly under cattleArea
 	CattleStall* feedingStall = new CattleStall(20, 30);
-	cattleArea->addChild(feedingStall);
-	cattleArea->attach(feedingStall);
+	cattleArea.addChild(feedingStall);
+	cattleArea.attach(feedingStall);
 	
 	std::cout << "\n[Broadcasting Feeding Time...]" << std::endl;
-	cattleArea->feedingTime("premium alfalfa");
+	cattleArea.feedingTime("premium alfalfa");
 	
 	std::cout << "\n[Broadcasting Quarantine...]" << std::endl;
-	cattleArea->quarantine(14);
+	cattleArea.quarantine(14);
 	
 	// Note: We would instantiate FoodStall to test vipArrival, but it currently lacks constructors.
 	// However, the function vipArrival is fully implemented in GeneralStall!
@@ -172,6 +157,8 @@ int main()
 	std::cout << "\n=== SHUTDOWN ===" << std::endl;
 	auction.shutdown();
 	std::cout << "Auction closed: " << !auction.reportStatus() << std::endl;
+
+	std::cout << "\n\n=== TASK 4.3: CONDITIONAL DECISION DEMONSTRATION ===" << std::endl;
 
 	return 0;
 }
