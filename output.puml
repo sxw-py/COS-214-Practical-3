@@ -6,6 +6,7 @@
 
 /' Objects '/
 
+<<<<<<< Updated upstream
 abstract class Area {
 	+~Area()
 	+{abstract} reportStatus() : bool {query}
@@ -16,21 +17,56 @@ abstract class Area {
 
 
 class Auction {
+=======
+class Auction {
+	+Auction()
+	+isPaused() : bool {query}
+	-paused : bool
+	-pendingBids : int
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
 class CardiacStall {
 	+CardiacStall(int cap)
+<<<<<<< Updated upstream
 	+treatPatient(const Patient<MI>& patient) : void {query}
+=======
+	-cardiacProtocolActive : bool
+	+isCardiacProtocolActive() : bool {query}
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+treatPatient(const Patient<MI>& patient) : void {query}
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
 class CattleArea {
+<<<<<<< Updated upstream
+=======
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
 class CattleStall {
 	+CattleStall(int numCattle, int cap)
+<<<<<<< Updated upstream
 	+getNumCattle() : int
 	-numCattle : int
 	+capacityAlert(Subject &) : void
@@ -38,6 +74,22 @@ class CattleStall {
 	+moo() : void
 	+setup(Subject &) : void
 	+shutdown(Subject &) : void
+=======
+	-accessLimited : bool
+	+isAccessLimited() : bool {query}
+	-isSheltered : bool
+	+getNumCattle() : int
+	-numCattle : int
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+feedingTime(std::string foodType) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+moo() : void
+	+quarantine(int days) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
@@ -47,6 +99,7 @@ abstract class Complaint {
 }
 
 
+<<<<<<< Updated upstream
 class Composite <template<typename T>> {
 	+~Composite()
 	+removeChild(T* child) : T*
@@ -62,6 +115,26 @@ class Composite <template<typename T>> {
 	+setup(Subject& subject) : void
 	+shutdown(Subject& subject) : void
 	+weatherAlert(Subject& subject) : void
+=======
+class Composite {
+	+~Composite()
+	+removeChild(EventComponent* child) : EventComponent*
+	+reportStatus() : bool {query}
+	+getCapacity() : int {query}
+	-children : std::vector<EventComponent*>
+	+addChild(EventComponent* child) : void
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+close() : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+feedingTime(std::string foodType) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+open() : void
+	+quarantine(int days) : void
+	+setup() : void
+	+shutdown() : void
+	+vipArrival(int vipLevel) : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
@@ -71,7 +144,18 @@ class Cough {
 
 
 class DrinkStall {
+<<<<<<< Updated upstream
 	+unitCost() : int {query}
+=======
+	+DrinkStall(int cap)
+	-drinksSecured : bool
+	+unitCost() : int {query}
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
@@ -85,22 +169,63 @@ abstract class EventComponent {
 
 
 class FoodStall {
+<<<<<<< Updated upstream
 	+unitCost() : int {query}
+=======
+	+FoodStall(int cap)
+	-foodSecured : bool
+	+isQueueManaged() : bool {query}
+	-queueManaged : bool
+	+unitCost() : int {query}
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
 class GeneralArea {
+<<<<<<< Updated upstream
+=======
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+feedingTime(std::string foodType) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+quarantine(int days) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
 abstract class GeneralStall {
+<<<<<<< Updated upstream
+=======
+	+GeneralStall(int cap)
+	+isServiceSlowed() : bool {query}
+	-serviceSlowed : bool
+>>>>>>> Stashed changes
 	+getRevenue() : int
 	-revenue : int
 	+{abstract} unitCost() : int {query}
 	+buyItem() : void
+<<<<<<< Updated upstream
 	+setup(Subject &) : void
 	+shutdown(Subject &) : void
 	+weatherAlert(Subject &) : void
+=======
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+vipArrival(int vipLevel) : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
@@ -122,29 +247,68 @@ class MI {
 
 
 class MedicalArea {
+<<<<<<< Updated upstream
 	+reportStatus() : bool {query}
 	+getCapacity() : int {query}
 	+close() : void
 	+open() : void
+=======
+	+MedicalArea()
+	-bedsPrepared : bool
+	-emergencyProtocolActive : bool
+	+isBedsPrepared() : bool {query}
+	+isPreparedForInjuries() : bool {query}
+	-preparedForInjuries : bool
+	+reportStatus() : bool {query}
+	+getCapacity() : int {query}
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+close() : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+open() : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
 class MedicalStall {
 	+MedicalStall(int cap)
+<<<<<<< Updated upstream
 	+medicalEmergency(Subject &) : void
 	+setup(Subject &) : void
 	+shutdown(Subject &) : void
+=======
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
 class Observer {
 	+~Observer()
+<<<<<<< Updated upstream
 	+capacityAlert(Subject &) : void
 	+escapedBull(Subject &) : void
 	+medicalEmergency(Subject &) : void
 	+setup(Subject &) : void
 	+shutdown(Subject &) : void
 	+weatherAlert(Subject &) : void
+=======
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+feedingTime(std::string) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+quarantine(int) : void
+	+setup() : void
+	+shutdown() : void
+	+vipArrival(int) : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
@@ -159,7 +323,18 @@ class Patient <template<typename T>> {
 
 class PulmonaryStall {
 	+PulmonaryStall(int cap)
+<<<<<<< Updated upstream
 	+treatPatient(const Patient<Cough>& patient) : void {query}
+=======
+	-emergencyProtocolActive : bool
+	+capacityAlert(int currentCount, int maxCapacity) : void
+	+escapedBull(const std::string& location, int numBulls) : void
+	+medicalEmergency(int severity, const std::string& injuryType) : void
+	+setup() : void
+	+shutdown() : void
+	+treatPatient(const Patient<Cough>& patient) : void {query}
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
@@ -170,19 +345,53 @@ class Stall {
 
 class Subject {
 	+~Subject()
+<<<<<<< Updated upstream
+=======
+	#currentCount : int
+	#currentSeverity : int
+	#maxCapacity : int
+	#numBulls : int
+	+{static} MaxSeverity : static const int
+	+{static} MoveThreshold : static const int
+	#bullLocation : std::string
+	#currentWeatherType : std::string
+	#injuryType : std::string
+>>>>>>> Stashed changes
 	#observers : std::vector<Observer*>
 	+attach(Observer* o) : void
 	+capacityAlert() : void
 	+detach(Observer* observer) : void
 	+escapedBull() : void
+<<<<<<< Updated upstream
 	+medicalEmergency() : void
 	+setup() : void
 	+shutdown() : void
+=======
+	+feedingTime(std::string foodType) : void
+	+medicalEmergency() : void
+	+quarantine(int days) : void
+	+setBullEscape(const std::string& location, int numBulls) : void
+	+setCapacityAlert(int currentCount, int maxCapacity) : void
+	+setMedicalEmergency(int severity, const std::string& injuryType) : void
+	+setWeatherData(int severity, const std::string& type) : void
+	+setup() : void
+	+shutdown() : void
+	+vipArrival(int vipLevel) : void
+>>>>>>> Stashed changes
 	+weatherAlert() : void
 }
 
 
 class Tent {
+<<<<<<< Updated upstream
+=======
+	+Tent()
+	+isWeatherProtected() : bool {query}
+	-weatherProtectionActive : bool
+	+setup() : void
+	+shutdown() : void
+	+weatherAlert(int severity, const std::string& type) : void
+>>>>>>> Stashed changes
 }
 
 
@@ -191,6 +400,7 @@ class Tent {
 
 /' Inheritance relationships '/
 
+<<<<<<< Updated upstream
 Area <|-- CattleArea
 
 
@@ -200,6 +410,8 @@ Area <|-- GeneralArea
 Area <|-- MedicalArea
 
 
+=======
+>>>>>>> Stashed changes
 Complaint <|-- Cough
 
 
@@ -265,6 +477,12 @@ Subject <|-- Composite
 
 /' Aggregation relationships '/
 
+<<<<<<< Updated upstream
+=======
+Composite o-- EventComponent
+
+
+>>>>>>> Stashed changes
 Subject o-- Observer
 
 

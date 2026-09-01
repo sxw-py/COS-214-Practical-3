@@ -2,7 +2,6 @@
 #define TENT_H
 
 #include "Composite.h"
-#include "Area.h"
 
 class Tent : public Composite<Area>
 {
